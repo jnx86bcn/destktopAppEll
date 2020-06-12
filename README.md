@@ -20,7 +20,7 @@ In order to update the frontend part you have to stop the application.
 
 Go to frontend folder and run: "npm start" to run up a server in port 8080 using webpack-dev-server.
 
-You have to keep in mind that this will online run up the frontend part the backend will remain off so many backend
+You have to keep in mind that this will only run up the frontend part the backend will remain off so many backend
 
 parts wont run. Modify the frontend part that you want html,css or js and save.
 
