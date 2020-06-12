@@ -1,4 +1,4 @@
-# template Desktop app with Python and JS
+# Template desktop app with Python and JS
 
 Template that allow you to create Desktop App with Frontend technology and Python in backend.
 
