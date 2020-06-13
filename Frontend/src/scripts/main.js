@@ -4,8 +4,8 @@ function deactivateDevTool() {
     window.oncontextmenu = () => {
         return false;
     }
-    document.onkeydown = (e) => { 
-        if (window.event.keyCode == 123 ||  e.button==2)    
+    document.onkeydown = (e) => {
+        if (window.event.keyCode == 123 || e.button == 2)
             return false;
     }
 }
@@ -17,13 +17,13 @@ function eventHandler() {
         freq: 0
     }
 
-    document.getElementById("message").addEventListener("change", (input)=>{
+    document.getElementById("message").addEventListener("change", (input) => {
         signalParams.message = input.target.value;
     });
-    document.getElementById("freq").addEventListener("change", (input)=>{
+    document.getElementById("freq").addEventListener("change", (input) => {
         signalParams.freq = +input.target.value;
     });
-    document.getElementById("btn_sendMessage").addEventListener("click", (e)=>{
+    document.getElementById("btn_sendMessage").addEventListener("click", (e) => {
         e.preventDefault();
         showSignal(signalParams);
     });
