@@ -1,10 +1,10 @@
-import os;
-import eel;
-import numpy as np;
-import pylab as plt;
-import struct as stu;
-import timeit;
-import pyaudio;
+import os
+import eel
+import numpy as np
+import pylab as plt
+import struct as stu
+import timeit
+import pyaudio
 
 
 signalParamsTest = {
@@ -12,7 +12,8 @@ signalParamsTest = {
     "freq": 440
 }
 
-def character2AmplitudeValues(character:str = '', maxAmp:int = 100, alphabetLen:int = 27):
+
+def character2AmplitudeValues(character: str = '', maxAmp: int = 100, alphabetLen: int = 27):
 
     _character2AmplitudeValues = {
         'a': maxAmp / alphabetLen*(alphabetLen),
@@ -43,70 +44,78 @@ def character2AmplitudeValues(character:str = '', maxAmp:int = 100, alphabetLen:
         'z': maxAmp / alphabetLen*(alphabetLen-25),
         ' ': maxAmp / alphabetLen*(alphabetLen-26)
     }
-    print(character);
-    print(_character2AmplitudeValues[character]);
-    return _character2AmplitudeValues[character];
-#character2AmplitudeValues
+    print(character)
+    print(_character2AmplitudeValues[character])
+    return _character2AmplitudeValues[character]
+# character2AmplitudeValues
 
-eel.init('../Frontend/dist');
 
-def createWavFile(nameFile,samples):
+eel.init('../Frontend/dist')
+
+
+def createWavFile(nameFile, samples):
 
     if(os.path.isdir('../sound') == False):
-        os.mkdir('../sound/');
+        os.mkdir('../sound/')
     fileWav = open('../sound/'+nameFile+'.wav', 'wb')
 
     for sample in samples:
-        fileWav.write(stu.pack('b', int(sample)));
-        
-    fileWav.close();
+        fileWav.write(stu.pack('b', int(sample)))
 
-    return True;
-#createWavFile
+    fileWav.close()
+
+    return True
+# createWavFile
+
 
 def playSound(samples):
-    p = pyaudio.PyAudio();
+    p = pyaudio.PyAudio()
 
-    stream = p.open(format=pyaudio.paFloat32,channels=1,rate=44100,output=True)
-    stream.write(samples);
-    stream.stop_stream();
-    stream.close();
+    stream = p.open(format=pyaudio.paFloat32,
+                    channels=1, rate=44100, output=True)
+    stream.write(samples)
+    stream.stop_stream()
+    stream.close()
 
     p.terminate()
 
     return False
-#playSound
+# playSound
+
 
 @eel.expose
 def testing(dummy_param):
     return "string_value", 1, 1.2, True, [1, 2, 3, 4], {"name": "eel"}
-#testing
+# testing
+
 
 def createSignal(character: str = signalParamsTest["message"], fc: int = signalParamsTest["freq"]):
-    Fs = 44100;
-    Amp = character2AmplitudeValues(character);
-    duration = 1/(4*fc);
+    Fs = 44100
+    Amp = character2AmplitudeValues(character)
+    duration = 1/(4*fc)
 
     # tic = np.round(timeit.default_timer() * 1000, 3);
-    x = np.arange(Fs * duration)*fc/Fs;
-    samples = (Amp * np.sin(2 * np.pi * x)).astype(np.float32);
+    x = np.arange(Fs * duration)*fc/Fs
+    samples = (Amp * np.sin(2 * np.pi * x)).astype(np.float32)
     # toc = np.round(timeit.default_timer() * 1000, 3);
 
-    return samples;
-#createSignal
+    return samples
+# createSignal
+
 
 def sendMessage(signalParams: dict):
     for i in range(0, len(signalParams["message"])):
-        character = signalParams["message"][i];
-        samples = createSignal(character,signalParams["freq"]);
-        playSound(samples);
-        createWavFile(character,samples);
-#sendMessage
+        character = signalParams["message"][i]
+        samples = createSignal(character, signalParams["freq"])
+        playSound(samples)
+        createWavFile(character, samples)
+# sendMessage
+
 
 @eel.expose
-def main(signalParams:dict = signalParamsTest):
-    sendMessage(signalParams);
-#main
+def main(signalParams: dict = signalParamsTest):
+    sendMessage(signalParams)
+# main
 
-eel.start('index.html', size=(1000, 600), port=8080);
 
+eel.start('index.html', size=(1000, 600), port=8080)
